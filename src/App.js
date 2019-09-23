@@ -1,22 +1,15 @@
 import React from 'react'
-import Note from './components/Note'
+import Course from './components/Course'
 
-const App = ({ notes }) => {
-  const rows = () => notes.map(note =>
-    <Note
-      key={note.id}
-      note={note}
-    />
-  )
+const App = ({course}) => {
+    console.log("App: ", course)
+    return (
+      <div>
+        <Course course={course}/>
+      </div>
+    )
+  }
 
-  return (
-    <div>
-      <h1>Notes</h1>
-      <ul>
-        {rows()}
-      </ul>
-    </div>
-  )
-}
+  export default App
 
-export default App
+  
