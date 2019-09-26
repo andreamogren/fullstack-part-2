@@ -15,20 +15,37 @@ const Part = (props) => {
 }
 
 const Content = ({course}) => {
-    const courseList = () => course.parts.map(part => 
-        <Part key={part.id} name={part.name} exercises={part.exercises}/>
-    )
+        const exercises = []
+        const courseList = () => course.parts.map(part => {
+                exercises.push(part.exercises)
+                return <Part key={part.id} name={part.name} exercises={part.exercises}/>
+            }
+        )
+        const totalSum = () => exercises.reduce((sum, exercise) => {
+                return sum + exercise 
+            }
+        ) 
     return(
     <div>
-        <Header course={course}/>
         {courseList()}
+        <p><b>Total: {totalSum()}</b></p>
     </div>
     )
 }
 
-const Course = ({course}) => {
+const Course = ({courses}) => {
+    const renderCourses = () => courses.map(course => {
+        return(
+            <div>
+                <Header key={course.id} course={course}/>
+                <Content key={course.id} course={course}/>
+            </div>
+        )
+    })
     return(
-        <Content course={course}/>
+        <div>
+            {renderCourses()}
+        </div>
     )
 }
 

@@ -1,11 +1,10 @@
 import React from 'react'
 import Course from './components/Course'
 
-const App = ({course}) => {
-    console.log("App: ", course)
+const App = ({courses}) => {
     return (
       <div>
-        <Course course={course}/>
+        <Course courses={courses}/>
       </div>
     )
   }
