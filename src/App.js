@@ -4,12 +4,19 @@ import Note from './components/Note'
 const App = (props) => {
   const [notes, setNotes] = useState(props.notes)
   const [newNote, setNewNote] = useState('a new note...')
+  const [showAll, setShowAll] = useState(true)
   //Remove this later
   console.log(notes)
 
-  const rows = () => notes.map(note => 
+  const notesToShow = showAll ? notes : notes.filter(note => note.important)
+
+  const rows = () => notesToShow.map(note => 
     <Note key={note.id} note={note}/>
   )
+  
+  const handleNoteChange = (event) => {
+    setNewNote(event.target.value)
+  }
 
   const addNote = (event) => {
     event.preventDefault()
@@ -24,13 +31,12 @@ const App = (props) => {
     setNewNote('')
   }
 
-  const handleNoteChange = (event) => {
-    setNewNote(event.target.value)
-  }
-
   return(
     <div>
       <h1>Notes</h1>
+      <div>
+        <button onClick={() => setShowAll(!showAll)}>show {showAll ? 'important' : 'all'}</button>
+      </div>
       <ul>
         {rows()}
       </ul>
