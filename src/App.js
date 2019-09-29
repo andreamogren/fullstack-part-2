@@ -1,45 +1,47 @@
-import React, {useState} from 'react'
-import Note from './components/Note'
+import React, { useState } from 'react'
 
-const App = (props) => {
-  const [notes, setNotes] = useState(props.notes)
-  const [newNote, setNewNote] = useState('a new note...')
-  //Remove this later
-  console.log(notes)
+const Number = (props) => {
+  return(
+    <>
+    <p>{props.name}</p>
+    </>
+  )
+}
 
-  const rows = () => notes.map(note => 
-    <Note key={note.id} note={note}/>
+const App = () => {
+  const [ persons, setPersons] = useState([
+    { name: 'Arto Hellas' }
+  ]) 
+  const [ newName, setNewName ] = useState('')
+
+  const addPerson= (event) => {
+    event.preventDefault()
+    const personObject = {
+      name: newName,
+    }
+    setPersons(persons.concat(personObject))
+    setNewName('')
+  }
+
+  const renderPersons = () => persons.map(person =>
+    <Number key={person.name} name={person.name}/>
   )
 
-  const addNote = (event) => {
-    event.preventDefault()
-    const noteObject = {
-      content: newNote, 
-      date: new Date().toISOString(), 
-      important: Math.random() > 0.5, 
-      id: notes.length + 1
-    }
-
-    setNotes(notes.concat(noteObject))
-    setNewNote('')
-  }
-
-  const handleNoteChange = (event) => {
-    setNewNote(event.target.value)
-  }
-
-  return(
+  return (
     <div>
-      <h1>Notes</h1>
-      <ul>
-        {rows()}
-      </ul>
-      <form onSubmit={addNote}>
-        <input value={newNote} onChange={handleNoteChange}/>
-        <button type="submit">Save</button>
+      <h2>Phonebook</h2>
+      <form>
+        <div>
+          name: <input onChange={(event) => setNewName(event.target.value)}/>
+        </div>
+        <div>
+          <button type="submit" onClick={addPerson}>add</button>
+        </div>
       </form>
+      <h2>Numbers</h2>
+      {renderPersons()}
     </div>
   )
 }
 
-  export default App
+export default App
