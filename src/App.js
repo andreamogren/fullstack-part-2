@@ -15,11 +15,18 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
 
   const addPerson= (event) => {
+    console.log(newName)
     event.preventDefault()
-    const personObject = {
-      name: newName,
+    const createPerson = () => {
+      const personObject = {
+        name: newName,
+      }
+      setPersons(persons.concat(personObject))
     }
-    setPersons(persons.concat(personObject))
+    console.log(typeof newName)
+    persons.filter(newName => (
+      newName ? alert(`${newName} is already in the phonebook`) : createPerson()  
+    ))
     setNewName('')
   }
 
