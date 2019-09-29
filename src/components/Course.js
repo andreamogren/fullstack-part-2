@@ -2,21 +2,21 @@ import React from 'react'
 
 const Header = ({course}) => {
     return(
-        <div><h1>{course.name}</h1></div>
+        <><h1>{course.name}</h1></>
     )
 }
 
 const Part = (props) => {
     return(
-        <div>
+        <>
             <p>{props.name}: {props.exercises}</p>
-        </div>
+        </>
     )
 }
 
 const Content = ({course}) => {
         const exercises = []
-        const courseList = () => course.parts.map(part => {
+        const courseList = () => course.parts.map((part, index) => {
                 exercises.push(part.exercises)
                 return <Part key={part.id} name={part.name} exercises={part.exercises}/>
             }
@@ -26,25 +26,18 @@ const Content = ({course}) => {
             }
         ) 
     return(
-    <div>
+    <>
         {courseList()}
         <p><b>Total: {totalSum()}</b></p>
-    </div>
+    </>
     )
 }
 
-const Course = ({courses}) => {
-    const renderCourses = () => courses.map(course => {
-        return(
-            <div>
-                <Header key={course.id} course={course}/>
-                <Content key={course.id} course={course}/>
-            </div>
-        )
-    })
+const Course = ({course}) => {
     return(
         <div>
-            {renderCourses()}
+            <Header course={course}/>
+            <Content course={course}/>
         </div>
     )
 }
