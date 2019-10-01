@@ -7,7 +7,6 @@ const Person = (props) => {
     </>
   )
 }
-
 const App = () => {
   const [ persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456' },
@@ -28,14 +27,17 @@ const App = () => {
       setPersons(persons.concat(personObject))
     }
     const upperCaseName = newName.toUpperCase()
+    console.log('uppercase name: ', upperCaseName)
 
     persons.map(person => {
       const upperCasePerson = person.name.toUpperCase()
       if(upperCaseName === upperCasePerson) {
+        console.log('uppercase person: ', upperCasePerson, 'true')
         setNewName('')
         setNewNumber('')
         return alert(`${newName} is already in the phonebook`)
       } else {
+        console.log('uppercase person: ', upperCasePerson, 'false')
         setNewName('')
         setNewNumber('')
         return createPerson()
@@ -43,18 +45,19 @@ const App = () => {
     })
   }
 
-  const filterEntries = () => persons.map() => {
+ /*  const filterEntries = () => persons.map(person => {
     const upperCaseEntries = person.name.toUpperCase()
-    new
-  }
+  }) */
 
   const renderPersons = () => persons.map(person =>
     <Person key={person.name} name={person.name} number={person.number}/>
   )
 
+  //<p>Filter entries:</p> <input onChange={(event) => filterEntries(event.target.value)}/>
+
   return (
     <div>
-      <p>Filter entries:</p> <input onChange={(event) => filterEntries(event.target.value)}/>
+
       <h2>Phonebook</h2>
       <form>
         <div>
