@@ -24,11 +24,11 @@ const App = () => {
         name: newName,
         number: newNumber,
       }
-      setPersons(persons.concat(personObject))
+      setPersons([...persons, personObject])
     }
     const upperCaseName = newName.toUpperCase()
     console.log('uppercase name: ', upperCaseName)
-
+    
     persons.map(person => {
       const upperCasePerson = person.name.toUpperCase()
       if(upperCaseName === upperCasePerson) {
@@ -41,7 +41,7 @@ const App = () => {
         setNewName('')
         setNewNumber('')
         return createPerson()
-      }
+      } 
     })
   }
 
