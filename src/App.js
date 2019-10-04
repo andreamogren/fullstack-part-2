@@ -47,14 +47,16 @@ const App = () => {
     setNewNumber('')
   }
 
- /*  const filterEntries = () => persons.map(person => {
-    const upperCaseEntries = person.name.toUpperCase()
+  //Filter thingy
+  const upperCaseEntries = []
+ /* const filterEntries = () => persons.map(person => {
+    setPersons([...upperCaseEntries, person.name.toUpperCase()])
   }) */
 
   const renderPersons = () => persons.map(person =>
     <Person key={person.name} name={person.name} number={person.number}/>
   )
-
+  
   //<p>Filter entries:</p> <input onChange={(event) => filterEntries(event.target.value)}/>
 
   return (
