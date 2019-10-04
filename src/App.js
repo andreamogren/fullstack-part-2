@@ -26,23 +26,25 @@ const App = () => {
       }
       setPersons([...persons, personObject])
     }
-    const upperCaseName = newName.toUpperCase()
-    console.log('uppercase name: ', upperCaseName)
-    
+
+    const upperCaseNewName = newName.toUpperCase()
+    let doubleName; 
     persons.map(person => {
       const upperCasePerson = person.name.toUpperCase()
-      if(upperCaseName === upperCasePerson) {
-        console.log('uppercase person: ', upperCasePerson, 'true')
-        setNewName('')
-        setNewNumber('')
-        return alert(`${newName} is already in the phonebook`)
-      } else {
-        console.log('uppercase person: ', upperCasePerson, 'false')
-        setNewName('')
-        setNewNumber('')
-        return createPerson()
-      } 
+      if(upperCaseNewName === upperCasePerson) {
+        doubleName = upperCasePerson
+      }
+      return doubleName
     })
+  
+    if (doubleName === undefined) {
+      createPerson()
+    } else if(doubleName === upperCaseNewName) {
+      alert(`${newName} is already in the phonebook`)
+    }
+
+    setNewName('')
+    setNewNumber('')
   }
 
  /*  const filterEntries = () => persons.map(person => {
