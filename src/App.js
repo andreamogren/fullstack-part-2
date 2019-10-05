@@ -43,26 +43,27 @@ const App = () => {
       alert(`${newName} is already in the phonebook`)
     }
 
-    setNewName('')
-    setNewNumber('')
+    setNewName('') //detta funkar inte längre?
+    setNewNumber('') //detta funkar inte längre? 
   }
 
   //Filter thingy
-  const upperCaseEntries = []
- /* const filterEntries = () => persons.map(person => {
-    setPersons([...upperCaseEntries, person.name.toUpperCase()])
-  }) */
+  const filterEntries = (event) => {
+    let filteredPersons = persons.filter(person => { //-1 grejen verkar inte funka? 
+      return console.log("Event: ", event.target.value, "Name: ", person.name, "!== -1?: ", person.name.toUpperCase().search(event.target.value.toUpperCase()) !== -1) //person.name.toUpperCase().search(event.target.value.toUpperCase()) !== 1;
+    }) 
+    //setPersons([...persons, filteredPersons]) Behöver peta in dennna någon annanstans, annars lägger den till personer i arrayen varje gång man skriver in en bokstav
+  }
 
   const renderPersons = () => persons.map(person =>
     <Person key={person.name} name={person.name} number={person.number}/>
   )
   
-  //<p>Filter entries:</p> <input onChange={(event) => filterEntries(event.target.value)}/>
-
   return (
     <div>
 
       <h2>Phonebook</h2>
+      <p>Filter entries:</p> <input onChange={(event) => filterEntries(event)}/>
       <form>
         <div>
           name: <input onChange={(event) => setNewName(event.target.value)}/>
