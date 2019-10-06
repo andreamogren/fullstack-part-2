@@ -57,7 +57,7 @@ const App = () => {
     }) 
     console.log("filtered persons, after: ", filteredPersons)
   }
-
+  //Hur får jag den här att uppdateras? Behöver jag använda state? Typ göra en kopia och peta in i filteredPersons?
   const renderPersons = () => filteredPersons.map(person =>
     <Person key={person.name} name={person.name} number={person.number}/>
   )
