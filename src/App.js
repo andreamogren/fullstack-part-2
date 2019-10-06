@@ -48,14 +48,17 @@ const App = () => {
   }
 
   //Filter thingy
-  const filterEntries = (event) => {
-    let filteredPersons = persons.filter(person => { //-1 grejen verkar inte funka? 
-      return console.log("Event: ", event.target.value, "Name: ", person.name, "!== -1?: ", person.name.toUpperCase().search(event.target.value.toUpperCase()) !== -1) //person.name.toUpperCase().search(event.target.value.toUpperCase()) !== 1;
+  let filteredPersons = [...persons]
+  console.log("filtered persons, before: ", filteredPersons)
+  const filterEntries = event => {
+   filteredPersons = persons.filter(person => { 
+      console.log("filtered persons, inside filter: ", filteredPersons)
+      return person.name.indexOf(event.target.value) !== -1
     }) 
-    //setPersons([...persons, filteredPersons]) Behöver peta in dennna någon annanstans, annars lägger den till personer i arrayen varje gång man skriver in en bokstav
+    console.log("filtered persons, after: ", filteredPersons)
   }
 
-  const renderPersons = () => persons.map(person =>
+  const renderPersons = () => filteredPersons.map(person =>
     <Person key={person.name} name={person.name} number={person.number}/>
   )
   
