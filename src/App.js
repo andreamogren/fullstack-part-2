@@ -8,12 +8,13 @@ const Person = (props) => {
   )
 }
 const App = () => {
-  const [ persons, setPersons] = useState([
+  const [ persons ] = useState([
     { name: 'Arto Hellas', number: '040-123456' },
     { name: 'Ada Lovelace', number: '39-44-5323523' },
     { name: 'Dan Abramov', number: '12-43-234345' },
     { name: 'Mary Poppendieck', number: '39-23-6423122' }
   ]) 
+  const [filteredPersons, setFilteredPersons] = useState([...persons])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
 
@@ -24,7 +25,7 @@ const App = () => {
         name: newName,
         number: newNumber,
       }
-      setPersons([...persons, personObject])
+      setFilteredPersons([...persons, personObject])
     }
 
     const upperCaseNewName = newName.toUpperCase()
@@ -47,17 +48,13 @@ const App = () => {
     setNewNumber('') //detta funkar inte längre? 
   }
 
-  //Filter thingy
-  let filteredPersons = [...persons]
-  console.log("filtered persons, before: ", filteredPersons)
   const filterEntries = event => {
-   filteredPersons = persons.filter(person => { 
-      console.log("filtered persons, inside filter: ", filteredPersons)
-      return person.name.indexOf(event.target.value) !== -1
-    }) 
-    console.log("filtered persons, after: ", filteredPersons)
+      let filtered = filteredPersons.filter(person => {
+        return person.name.toUpperCase().indexOf(event.target.value.toUpperCase()) !== -1
+      })
+    setFilteredPersons(filtered)
   }
-  //Hur får jag den här att uppdateras? Behöver jag använda state? Typ göra en kopia och peta in i filteredPersons?
+
   const renderPersons = () => filteredPersons.map(person =>
     <Person key={person.name} name={person.name} number={person.number}/>
   )
