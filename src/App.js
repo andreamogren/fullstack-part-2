@@ -26,7 +26,7 @@ const App = () => {
         number: newNumber,
       }
       setPersons([...persons, personObject])
-      setFilteredPersons([...persons, personObject])
+      setFilteredPersons([...persons, personObject]) //varför går det inte att bara köra ...persons?
     }
 
     const upperCaseNewName = newName.toUpperCase()
@@ -44,6 +44,7 @@ const App = () => {
     } else if(doubleName === upperCaseNewName) {
       alert(`${newName} is already in the phonebook`)
     }
+    console.log(setNewName(''), setNewNumber(''))//verkar som att de inte finns inuti den här funktionen?
   }
 
   const filterEntries = event => {
