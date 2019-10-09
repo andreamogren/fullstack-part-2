@@ -49,7 +49,7 @@ const App = () => {
   }
 
   const filterEntries = event => {
-      let filtered = filteredPersons.filter(person => {
+      let filtered = persons.filter(person => {
         return person.name.toUpperCase().indexOf(event.target.value.toUpperCase()) !== -1
       })
     setFilteredPersons(filtered)
