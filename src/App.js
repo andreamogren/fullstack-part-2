@@ -8,7 +8,7 @@ const Person = (props) => {
   )
 }
 const App = () => {
-  const [ persons ] = useState([
+  const [ persons, setPersons ] = useState([
     { name: 'Arto Hellas', number: '040-123456' },
     { name: 'Ada Lovelace', number: '39-44-5323523' },
     { name: 'Dan Abramov', number: '12-43-234345' },
@@ -25,6 +25,7 @@ const App = () => {
         name: newName,
         number: newNumber,
       }
+      setPersons([...persons, personObject])
       setFilteredPersons([...persons, personObject])
     }
 
@@ -43,9 +44,6 @@ const App = () => {
     } else if(doubleName === upperCaseNewName) {
       alert(`${newName} is already in the phonebook`)
     }
-
-    setNewName('') //detta funkar inte längre?
-    setNewNumber('') //detta funkar inte längre? 
   }
 
   const filterEntries = event => {
@@ -61,7 +59,6 @@ const App = () => {
   
   return (
     <div>
-
       <h2>Phonebook</h2>
       <p>Filter entries:</p> <input onChange={(event) => filterEntries(event)}/>
       <form>
