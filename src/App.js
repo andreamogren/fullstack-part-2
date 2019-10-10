@@ -1,12 +1,6 @@
 import React, { useState } from 'react'
+import Person from './components/Person'
 
-const Person = (props) => {
-  return(
-    <>
-    <p>{props.name} {props.number}</p>
-    </>
-  )
-}
 const App = () => {
   const [ persons, setPersons ] = useState([
     { name: 'Arto Hellas', number: '040-123456' },
@@ -20,14 +14,14 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-    
+
     const createPerson = () => {
       const personObject = {
         name: newName,
         number: newNumber,
       }
       setPersons([...persons, personObject])
-      setFilteredPersons([...persons, personObject]) //varför går det inte att bara köra ...persons?
+      setFilteredPersons([...persons, personObject]) //varför går det inte att bara köra [...persons?]
     }
 
     const upperCaseNewName = newName.toUpperCase()
