@@ -20,6 +20,7 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
+    
     const createPerson = () => {
       const personObject = {
         name: newName,
@@ -45,6 +46,8 @@ const App = () => {
       alert(`${newName} is already in the phonebook`)
     }
     console.log(setNewName(''), setNewNumber(''))//verkar som att de inte finns inuti den här funktionen?
+/*     this.setNewName = this.setNewName.bind(this);
+    this.setNewName('') */ 
   }
 
   const filterEntries = event => {
