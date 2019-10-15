@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import Person from './components/Person'
+import ContactForm from './components/ContactForm'
+import Filter from './components/Filter'
 
 const App = () => {
   const [ persons, setPersons ] = useState([
@@ -25,7 +27,7 @@ const App = () => {
     }
 
     const upperCaseNewName = newName.toUpperCase()
-    let doubleName; 
+    let doubleName
     persons.map(person => {
       const upperCasePerson = person.name.toUpperCase()
       if(upperCaseNewName === upperCasePerson) {
@@ -39,9 +41,9 @@ const App = () => {
     } else if(doubleName === upperCaseNewName) {
       alert(`${newName} is already in the phonebook`)
     }
-    console.log(setNewName(''), setNewNumber(''))//verkar som att de inte finns inuti den här funktionen?
-/*     this.setNewName = this.setNewName.bind(this);
-    this.setNewName('') */ 
+    
+    setNewName('')
+    setNewNumber('')
   }
 
   const filterEntries = event => {
@@ -58,17 +60,14 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <p>Filter entries:</p> <input onChange={(event) => filterEntries(event)}/>
-      <form>
-        <div>
-          name: <input onChange={(event) => setNewName(event.target.value)}/>
-          <br/>
-          phone: <input onChange={(event) => setNewNumber(event.target.value)}/>
-        </div>
-        <div>
-          <button type="submit" onClick={addPerson}>add</button>
-        </div>
-      </form>
+      <Filter searchTerm={(event) => filterEntries(event)}/>
+      <ContactForm 
+        name={newName}
+        number={newNumber}
+        changeName={(event) => setNewName(event.target.value)} 
+        changeNumber={(event) => setNewNumber(event.target.value)} 
+        clickHandler={(event) => addPerson(event)}
+      />
       <h2>Numbers</h2>
       {renderPersons()}
     </div>
