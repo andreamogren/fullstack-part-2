@@ -23,7 +23,7 @@ const App = () => {
         number: newNumber,
       }
       setPersons([...persons, personObject])
-      setFilteredPersons([...persons, personObject]) //varför går det inte att bara köra [...persons?]
+      setFilteredPersons([...persons, personObject])
     }
 
     const upperCaseNewName = newName.toUpperCase()
