@@ -5,8 +5,6 @@ const App = (props) => {
   const [notes, setNotes] = useState(props.notes)
   const [newNote, setNewNote] = useState('a new note...')
   const [showAll, setShowAll] = useState(true)
-  //Remove this later
-  console.log(notes)
 
   const notesToShow = showAll ? notes : notes.filter(note => note.important)
 
