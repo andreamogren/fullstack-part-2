@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import personService from './services/persons'
 import Person from './components/Person'
 import ContactForm from './components/ContactForm'
 import Filter from './components/Filter'
@@ -11,18 +11,15 @@ const App = () => {
   const [ newNumber, setNewNumber ] = useState('')
 
   useEffect(() => {    
-    console.log('effect')    
-    axios      
-      .get('http://localhost:3001/persons')      
-      .then(response => {        
-        console.log('promise fulfilled')        
-        setPersons(response.data)     
-        setFilteredPersons(response.data) 
-      })  
+    personService
+      .getAll()
+      .then(response => {
+        setPersons(response.data)
+        setFilteredPersons(response.data)
+      })
     }, [])  
-    console.log('render', persons.length, 'persons')
 
-  const addPerson = (event) => {
+  const addPerson = event => {
     event.preventDefault()
 
     const createPerson = () => {
@@ -30,8 +27,12 @@ const App = () => {
         name: newName,
         number: newNumber,
       }
-      setPersons([...persons, personObject])
-      setFilteredPersons([...persons, personObject])
+      personService
+        .create(personObject)
+        .then(response => {
+            setPersons(persons.concat(response.data))
+            setFilteredPersons(filteredPersons.concat(response.data))
+        }) 
     }
 
     const upperCaseNewName = newName.toUpperCase()
@@ -53,6 +54,20 @@ const App = () => {
     setNewName('')
     setNewNumber('')
   }
+  const removeNumber = event => {
+    if(window.confirm(`Delete person?`)) {
+      personService
+      .deletePerson(event.target.id)
+      .then(response => {
+        personService
+        .getAll()
+        .then(response => {
+          setPersons(response.data)
+          setFilteredPersons(response.data)
+        })
+      })
+    }
+  }
 
   const filterEntries = event => {
       let filtered = persons.filter(person => {
@@ -62,7 +77,7 @@ const App = () => {
   }
 
   const renderPersons = () => filteredPersons.map(person =>
-    <Person key={person.name} name={person.name} number={person.number}/>
+    <Person key={person.id} id={person.id} name={person.name} number={person.number} delete={(event) => removeNumber(event)}/>
   )
   
   return (
