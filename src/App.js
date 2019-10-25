@@ -5,11 +5,13 @@ import ContactForm from './components/ContactForm'
 import Filter from './components/Filter'
 
 const App = () => {
+  //useState functions and variables
   const [ persons, setPersons ] = useState([]) 
   const [ filteredPersons, setFilteredPersons ] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
-
+  
+  //Fetching persons from database with useEffect hook
   useEffect(() => {    
     personService
       .getAll()
@@ -17,57 +19,72 @@ const App = () => {
         setPersons(response.data)
         setFilteredPersons(response.data)
       })
-    }, [])  
-
+  }, [])
+    
+/* Add person function */
   const addPerson = event => {
     event.preventDefault()
-
+    
+    //Creating a new entry 
     const createPerson = () => {
       const personObject = {
         name: newName,
         number: newNumber,
       }
+      //Sending new entry to phonebook database
       personService
         .create(personObject)
         .then(response => {
-            setPersons(persons.concat(response.data))
-            setFilteredPersons(filteredPersons.concat(response.data))
+            setPersons([...persons, response.data])
+            setFilteredPersons([...persons, response.data])
         }) 
     }
-
+    
+    /* Comparing new entry to the ones in the phonebook */ 
     const upperCaseNewName = newName.toUpperCase()
     let doubleName
     persons.map(person => {
       const upperCasePerson = person.name.toUpperCase()
       if(upperCaseNewName === upperCasePerson) {
+        //If the person doesn't exist in the phonebook, add them to the doubleName variable
         doubleName = upperCasePerson
       }
       return doubleName
     })
-  
+    
+    //If double name is undefined, create a new entry (didn't use !doubleName since I don't know what other values it might return)
     if (doubleName === undefined) {
       createPerson()
     } else if(doubleName === upperCaseNewName) {
       alert(`${newName} is already in the phonebook`)
     }
+    /* */
     
     setNewName('')
     setNewNumber('')
   }
+  /* */
+  
+  /* Remove number function */
   const removeNumber = event => {
-    if(window.confirm(`Delete person?`)) {
+    const person = event.target.previousElementSibling
+    //-1 since the array has zero indexing
+    const arrayID = (person.id - 1)
+    const id = person.id
+    if(window.confirm(`Delete ${persons[arrayID].name}?`)) {
       personService
-      .deletePerson(event.target.id)
-      .then(response => {
-        personService
-        .getAll()
-        .then(response => {
-          setPersons(response.data)
-          setFilteredPersons(response.data)
+        .deletePerson(id)
+        .then(() => {
+          personService
+          .getAll()
+          .then(response => {
+            setPersons(response.data)
+            setFilteredPersons(response.data)
         })
       })
     }
   }
+  /* */
 
   const filterEntries = event => {
       let filtered = persons.filter(person => {
