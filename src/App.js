@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import personService from './services/persons'
 import Person from './components/Person'
 import ContactForm from './components/ContactForm'
+import Notification from './components/Notification'
 import Filter from './components/Filter'
 
 const App = () => {
@@ -10,6 +11,7 @@ const App = () => {
   const [ filteredPersons, setFilteredPersons ] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
+  const [ sucessMessage, setSuccessMessage ] = useState('')
   
   //Fetching persons from database with useEffect hook
   useEffect(() => {    
@@ -37,6 +39,8 @@ const App = () => {
         .then(response => {
             setPersons([...persons, response.data])
             setFilteredPersons([...persons, response.data])
+            setSuccessMessage(`Added ${personObject.name}`)
+            .setTimeout(() => {setSuccessMessage('')}, 5000)
         }) 
     }
     
@@ -100,6 +104,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={sucessMessage}/>
       <Filter searchTerm={(event) => filterEntries(event)}/>
       <ContactForm 
         name={newName}
