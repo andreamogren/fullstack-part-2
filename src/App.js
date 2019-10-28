@@ -11,7 +11,7 @@ const App = () => {
   const [ filteredPersons, setFilteredPersons ] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
-  const [ sucessMessage, setSuccessMessage ] = useState('')
+  const [ successMessage, setSuccessMessage ] = useState('')
   
   //Fetching persons from database with useEffect hook
   useEffect(() => {    
@@ -37,10 +37,12 @@ const App = () => {
       personService
         .create(personObject)
         .then(response => {
-            setPersons([...persons, response.data])
-            setFilteredPersons([...persons, response.data])
-            setSuccessMessage(`Added ${personObject.name}`)
-            .setTimeout(() => {setSuccessMessage('')}, 5000)
+          setPersons([...persons, response.data])
+          setFilteredPersons([...persons, response.data])
+          setSuccessMessage(`Added ${personObject.name}`)
+          setTimeout(() => {
+            setSuccessMessage('')
+          }, 5000)
         }) 
     }
     
@@ -104,7 +106,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={sucessMessage}/>
+      <Notification message={successMessage}/>
       <Filter searchTerm={(event) => filterEntries(event)}/>
       <ContactForm 
         name={newName}
