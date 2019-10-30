@@ -74,10 +74,8 @@ const App = () => {
   /* Remove number function */
   const removeNumber = event => {
     const person = event.target.previousElementSibling
-    //-1 since the array has zero indexing
-    const arrayID = (person.id - 1)
     const id = person.id
-    if(window.confirm(`Delete ${persons[arrayID].name}?`)) {
+    if(window.confirm(`Delete ${person.innerHTML}?`)) {
       personService
         .deletePerson(id)
         .then(() => {
