@@ -18,8 +18,9 @@ const App = () => {
     personService
       .getAll()
       .then(response => {
-        setPersons(response.data)
-        setFilteredPersons(response.data)
+        const initialPersons = response.data
+        setPersons(initialPersons)
+        setFilteredPersons(initialPersons)
       })
   }, [])
     
@@ -82,8 +83,9 @@ const App = () => {
           personService
           .getAll()
           .then(response => {
-            setPersons(response.data)
-            setFilteredPersons(response.data)
+            const updatedPersons = response.data
+            setPersons(updatedPersons)
+            setFilteredPersons(updatedPersons)
         })
       })
     }
