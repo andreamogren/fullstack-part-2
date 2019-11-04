@@ -18,7 +18,7 @@ const App = () => {
     personService
       .getAll()
       .then(response => {
-        const initialPersons = response.data
+        const initialPersons = response
         setPersons(initialPersons)
         setFilteredPersons(initialPersons)
       })
@@ -38,8 +38,8 @@ const App = () => {
       personService
         .create(personObject)
         .then(response => {
-          setPersons([...persons, response.data])
-          setFilteredPersons([...persons, response.data])
+          setPersons([...persons, response])
+          setFilteredPersons([...persons, response])
           setSuccessMessage(`Added ${personObject.name}`)
           setTimeout(() => {
             setSuccessMessage('')
@@ -83,7 +83,7 @@ const App = () => {
           personService
           .getAll()
           .then(response => {
-            const updatedPersons = response.data
+            const updatedPersons = response
             setPersons(updatedPersons)
             setFilteredPersons(updatedPersons)
         })
