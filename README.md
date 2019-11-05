@@ -18,3 +18,6 @@ You will also see any lint errors in the console.
 ### `npm run server`
 
 Starts a JSON server on port 3001 needed to fetch data from the database. Run this in a separate commandline window at the same time as `npm start`.
+
+## Link to Heroku App
+[https://safe-tundra-16200.herokuapp.com/](https://safe-tundra-16200.herokuapp.com/)
