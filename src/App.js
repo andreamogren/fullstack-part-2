@@ -11,7 +11,7 @@ const App = () => {
   const [ filteredPersons, setFilteredPersons ] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
-  const [ successMessage, setSuccessMessage ] = useState('')
+  const [ statusMessage, setStatusMessage ] = useState('')
   
   //Fetching persons from database with useEffect hook
   useEffect(() => {    
@@ -40,10 +40,40 @@ const App = () => {
         .then(response => {
           setPersons([...persons, response])
           setFilteredPersons([...persons, response])
-          setSuccessMessage(`Added ${personObject.name}`)
+          setStatusMessage(`Added ${personObject.name}`)
           setTimeout(() => {
-            setSuccessMessage('')
+            setStatusMessage('')
           }, 5000)
+        })
+        .catch(error => {
+          const errorMessage = error.response.data
+          const startNameErr = errorMessage.indexOf('name')
+          const endNameErr = errorMessage.indexOf('(3)') + 3
+          const startNumberErr = errorMessage.indexOf('number')
+          const endNumberErr = errorMessage.indexOf('(8)') + 3
+          console.log(error.response.data)
+
+          if (startNameErr !== -1 && endNameErr !== -1) {
+            setStatusMessage(`${errorMessage.substring(startNameErr, endNameErr)}, ${errorMessage.substring(startNumberErr, endNumberErr)}`)
+            setTimeout(() => {
+              setStatusMessage('')
+            }, 5000)
+          } else if (startNameErr !== -1) {
+            setStatusMessage(`${errorMessage.substring(startNameErr, endNameErr)}`)
+            setTimeout(() => {
+              setStatusMessage('')
+            }, 5000)
+          } else if (startNumberErr !== -1) {
+            setStatusMessage(`${errorMessage.substring(startNumberErr, endNumberErr)}`)
+            setTimeout(() => {
+              setStatusMessage('')
+            }, 5000)
+          } else {
+            setStatusMessage(`There was an error with the contact details you added, please try again or check the console for more details.`)
+            setTimeout(() => {
+              setStatusMessage('')
+            }, 5000)
+          }
         }) 
     }
     
@@ -106,7 +136,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={successMessage}/>
+      <Notification message={statusMessage}/>
       <Filter searchTerm={(event) => filterEntries(event)}/>
       <ContactForm 
         name={newName}
